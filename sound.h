@@ -11,8 +11,8 @@ typedef struct{
 	unsigned short numChannels;	//1 for mono
 	unsigned int sampleRate;
 	unsigned int byteRate;
-	unsigned int blockAlign;
-	unsigned int bitsPerSample;
+	unsigned short blockAlign;
+	unsigned short bitsPerSample;
 	char subchunk2ID[4];		//"Data"
 	unsigned int subchunk2Size;
 }WAVHeader;
