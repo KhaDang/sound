@@ -1,9 +1,10 @@
-OBJ = main.o sound.o
+OBJ = main.o sound.o screen.o
 APPNAME = sound.a
 
 #link rule
 $(APPNAME) : $(OBJ)
 	gcc -o $(APPNAME) $(OBJ) -lm
+#compiling rule
 %.o : %.c
 	gcc -c -o $@ $<
 clean :

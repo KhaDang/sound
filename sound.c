@@ -2,7 +2,7 @@
 #include "sound.h"
 #include <stdio.h>
 #include <math.h>
-
+#include "screen.h"
 //function definition of printID()
 void printID(char id[]){
 	int i;
@@ -17,22 +17,27 @@ void dispWAVData(char filename[]){
 	int i,j;					// loop counter
 	FILE *fp;					//file handler to opern the file "test.wav"
 	double rms[80],sum;			//80 pieces of RMS value
-	short samples[SAMPLERATE];	//totally 19000 samplie in 1 sec
+	short samples[SAMPLERATE];	//totally 16000 samplie in 1 sec
 	WAVHeader mh;				// just used to skip over the header of the waw file
 	fp= fopen(filename, "r");
 	if(fp==NULL){
 		printf("Error when open the file!");
-	return;
+		return;
 	}
-	fread(&mh, sizeof(mh),1,fp);
+	fread(&mh, sizeof(mh),1,fp);						//sp over the header of wave file
 	fread(samples, sizeof(short), SAMPLERATE, fp);
 	fclose(fp);
+	clearScreen();
 	for(i=0; i<80; i++){
 		for(j=0,sum=0.0; j<SAMPLERATE/80; j++){
 			sum+= samples[j+i*200]*samples[j+i*200];
 		}
 		rms[i]=sqrt(sum/200);
-		printf("rms[%d]: %10.4f \n",i,rms[i]);
+#ifdef DEBUG
+		printf("rms[%d]: %10.4f, dB = %10.4f \n",i,rms[i],20*log(rms[i]));
+#else
+		dispBar(i,20*log10(rms[i]));						//display dB value a var
+#endif
 	}
 }
 
