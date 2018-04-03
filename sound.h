@@ -1,5 +1,5 @@
 // constant definitions
-//#define DEBUG			// condiional compiling
+//#define DEBUG			// conditional compiling
 #define SAMPLERATE 16000
 // struct/ union definitions
 typedef struct{

@@ -27,6 +27,22 @@ void dispBar(int col, double dB){
 	int i; // loop counter
 	for(i=0; i<dB/3; i++){
 		gotoxy(30-i, col+1);
+#ifndef UNICODE					//if unicode is not enabled
 		printf("%c", '*');
-	}	
-}
+#else
+		if(dB<50){
+			setColor(WHITE);
+			printf("%s", BAR);	
+		}
+		else if(dB>=50 && dB<=70){
+			setColor(YELLOW);
+			printf("%s",BAR);
+			}
+			else{
+			setColor(RED);
+			printf("%s", BAR);
+			}
+#endif
+	}						// end of loop	
+}							// end of function
+
