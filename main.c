@@ -7,7 +7,7 @@ int main(void){
 	int ret;
 	while(1){		//loop forever
 		// Run system command "arecord" to record 1 sec of wave
-		system("arecord -r16000 -c1 -f S16_LE -d1 test.wav");
+		ret = system("arecord -r16000 -c1 -f S16_LE -d1 test.wav");
 		if(WIFSIGNALED(ret) && (WTERMSIG(ret)==SIGINT)) break;
 		// Display WAV header
 		dispWAVHeader("test.wav");

@@ -1,4 +1,6 @@
 //This file
+#include "comm.h"
+
 #include "sound.h"
 #include <stdio.h>
 #include <math.h>
@@ -30,7 +32,7 @@ void dispWAVData(char filename[]){
 	clearScreen();
 	for(i=0; i<80; i++){
 		for(j=0,sum=0.0; j<SAMPLERATE/80; j++){
-			sum += samples[j+i*200]*samples[j+i*200];
+			sum += samples[j+i*200] * samples[j+i*200];
 		}
 		rms[i]=sqrt(sum/200);
 #ifdef DEBUG
@@ -39,8 +41,12 @@ void dispWAVData(char filename[]){
 		dispBar(i,20*log10(rms[i]));						//display dB value a var
 #endif
 	}
-}
 
+#ifdef COMM
+	sendToServer(rms);
+	
+#endif
+}
 
 void dispWAVHeader(char filename[]){
 	FILE *fp;
