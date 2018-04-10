@@ -1,18 +1,29 @@
 #include "screen.h"
 #include <stdio.h>
-
-// function definition of clearScreen()
+/*
+	function definition of clearScreen()
+	this function uses VT100 escape sequence \ESC[2J to make the whole terminl screen empty
+	argument:	no
+	return: no
+*/
 void clearScreen(void){
 	printf("%c[2J", ESC);
 	fflush(stdout);				// make the whole screen as black
-	
 }
-// function definition of gotoxy
+/*
+	function definition of gotoxy()
+	this function uses VT100 escape sequence \ESC[row; colH to set cursor to a specific
+	location on the terminal screen
+	argument: 	row number, 1 is top row
+				col number, 1 is left column
+	return : no
+*/
 void gotoxy(int row, int col){
 	printf("%c[%d;%dH", ESC, row, col);
 	fflush(stdout);
 }
-// function definition of serColor()
+// function definition of setColor()
+
 void setColor(int color){
 	if(color>=BLACK && color<=WHITE){
 		printf("%c[1;%dm", ESC, color);
@@ -31,7 +42,7 @@ void dispBar(int col, double dB){
 		printf("%c", '*');
 #else
 		if(i*3<50){
-			setColor(WHITE);
+			setColor(BLUE);
 			printf("%s", BAR);	
 		}
 		else if(i*3>=50 && i*3<=70){
