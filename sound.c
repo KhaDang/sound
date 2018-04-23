@@ -20,7 +20,7 @@ void dispWAVData(char filename[]){
 	FILE *fp;					//file handler to opern the file "test.wav"
 	double rms[80],sum;			//80 pieces of RMS value
 	short samples[SAMPLERATE];	//totally 16000 samplie in 1 sec
-	WAVHeader mh;				// just used to skip over the header of the waw file
+	WAVHeader mh;				// just used to skip over the header of the wav file
 	fp= fopen(filename, "r");
 	if(fp==NULL){
 		printf("Error when open the file!");
@@ -38,7 +38,7 @@ void dispWAVData(char filename[]){
 #ifdef DEBUG
 		printf("rms[%d]: %10.4f, dB = %10.4f \n",i,rms[i],20*log10(rms[i]));
 #else
-		dispBar(i,20*log10(rms[i]));						//display dB value a var
+		dispBar(i,20*log10(rms[i]));						//display dB value a bar
 #endif
 	}
 
