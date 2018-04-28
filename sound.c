@@ -1,11 +1,12 @@
 //This file
 #include "comm.h"
-
 #include "sound.h"
 #include <stdio.h>
 #include <math.h>
 #include "screen.h"
-//function definition of printID()
+/*--- function definition of printID()---
+ print out the id 
+*/
 void printID(char id[]){
 	int i;
 	for(i=0; i<4; i++)
@@ -14,7 +15,16 @@ void printID(char id[]){
 
 }
 
-// function definition of dispWAVData()
+/*--- Funtion definition for dispWAVData--- 
+
+This function read the input file (the sound file) and calculate the amplitude of input sound
+To do so, 1600 samples has been create in the sound file. The program read the amplituce of each sample from the input file
+However there are too many samples need to calculate and That needs a huge calcuation as well as a lot of memory capacity to store the data
+
+To simplify the process 200 pieces of data sample has been group together and their root mean square will be calculated
+Then results then be stored in the array and can be accessed by other functions.
+Therefore, 80 values of the amplitube of sound has been stored, instead of 1600 values.
+*/
 void dispWAVData(char filename[]){
 	int i,j;					// loop counter
 	FILE *fp;					//file handler to opern the file "test.wav"
@@ -26,7 +36,7 @@ void dispWAVData(char filename[]){
 		printf("Error when open the file!");
 		return;
 	}
-	fread(&mh, sizeof(mh),1,fp);						//sp over the header of wave file
+	fread(&mh, sizeof(mh),1,fp);						//skip over the header of wave file
 	fread(samples, sizeof(short), SAMPLERATE, fp);
 	fclose(fp);
 	clearScreen();
@@ -35,19 +45,27 @@ void dispWAVData(char filename[]){
 			sum += samples[j+i*200] * samples[j+i*200];
 		}
 		rms[i]=sqrt(sum/200);
+		
+// if DEBUG mode is eable then the program will print the rms value and rms value in decibel 
+// Otherwise the disBar() function will be called
 #ifdef DEBUG
 		printf("rms[%d]: %10.4f, dB = %10.4f \n",i,rms[i],20*log10(rms[i]));
 #else
-		dispBar(i,20*log10(rms[i]));						//display dB value a bar
+		dispBar(i,20*log10(rms[i]));						// the function definition is written in screen.c
 #endif
 	}
-
+// After calculating the rms value of input wave sound. The program send this data to server
+// Refer comm.c to see function definition
 #ifdef COMM
 	sendToServer(rms);
 	
 #endif
 }
 
+/*--- Function definition for disWAVHeader()--- 
+This function will print out the Canonical form of the input sound file
+
+*/
 void dispWAVHeader(char filename[]){
 	FILE *fp;
 	WAVHeader mh;		//an instace of WAVHeader struct
@@ -70,8 +88,8 @@ void dispWAVHeader(char filename[]){
 	printID(mh.subchunk1ID);
 	printf(" subchunk 1 size: %d\n", mh.subchunk1Size);
 
-	printf(" Audio formate: %d\n", mh.audioFormat);						// The 16 should been placed
-	printf(" Channel number: %d\n", mh.numChannels);					// The channel should been 1
+	printf(" Audio formate: %d\n", mh.audioFormat);						
+	printf(" Channel number: %d\n", mh.numChannels);					
 	printf(" Sample rate: %d\n", mh.sampleRate);
 	printf(" Block align: %d\n", mh.blockAlign);
 	printf(" Bits per sample: %d\n", mh.bitsPerSample);

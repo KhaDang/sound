@@ -22,7 +22,9 @@ void gotoxy(int row, int col){
 	printf("%c[%d;%dH", ESC, row, col);
 	fflush(stdout);
 }
-// function definition of setColor()
+/*--- function definition of setColor()---
+Set the color to the cursor accordingly to ESC
+*/
 
 void setColor(int color){
 	if(color>=BLACK && color<=WHITE){
@@ -30,10 +32,14 @@ void setColor(int color){
 		fflush(stdout);
 	}
 }
-// function definition of dispBar(), this function displays a vertical bar
-// for the given dB value. The value varies between 30 and 90, so we need to
-// render 3dB for one row and 90dB will be displayed as bar of 30 rows
-
+/*--- function definition of dispBar()---
+This function displays a vertical bar for the given dB value. The value varies between 30 and 90, so we need to
+ render 3dB for one row and 90dB will be displayed as bar of 30 rows
+ 
+ if the dB>50 set BLUE color
+ if the dB>=50 and db<=70 set YELLOW color
+ otherwise set RED color.
+*/
 void dispBar(int col, double dB){
 	int i; // loop counter
 	for(i=0; i<dB/3; i++){
@@ -54,6 +60,7 @@ void dispBar(int col, double dB){
 			printf("%s", BAR);
 			}
 #endif
-	}						// end of loop	
+	}						// end of loop
+	gotoxy(31,0);	
 }							// end of function
 

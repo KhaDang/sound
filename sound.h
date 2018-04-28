@@ -1,6 +1,14 @@
+//#define DEBUG			// <--conditional compiling, enable this line to turn into Debug mode-->
 // constant definitions
-//#define DEBUG			// conditional compiling
 #define SAMPLERATE 16000
+
+/*
+The WAVE file format is a subset of Microsoft's RIFF specification for the storage of multimedia files.
+A RIFF file starts out with a file header followed by a sequences of data chunks. A WAVE file is often
+just a RIFF file with a single "WAVE" chuck which consists of two sub-chunks--a "fmt" chunk specififying
+the data format and a "data" chunk containing the actual sample data.
+*/
+
 // struct/ union definitions
 typedef struct{
 	char chunkID[4];	// "RIFF"

@@ -1,4 +1,3 @@
-// this header file defines neceesary constants and function prototypes
 // for communication. In our solution, <curl.h> library is used
 
 #define COMM		// conditional compiling

@@ -8,6 +8,8 @@ int main(void){
 	while(1){		//loop forever
 		// Run system command "arecord" to record 1 sec of wave
 		ret = system("arecord -r16000 -c1 -f S16_LE -d1 test.wav");
+		
+		// exit the program when the signal has been interupted (for example press Ctr+C)
 		if(WIFSIGNALED(ret) && (WTERMSIG(ret)==SIGINT)) break;
 		// Display WAV header
 		dispWAVHeader("test.wav");
